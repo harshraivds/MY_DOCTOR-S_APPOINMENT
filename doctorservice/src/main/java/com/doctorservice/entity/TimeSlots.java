@@ -20,4 +20,28 @@ public class TimeSlots {
     @JoinColumn(name = "appointment_schedule_id")
     @JsonBackReference
     private DoctorAppointmentSchedule doctorAppointmentSchedule;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+    public DoctorAppointmentSchedule getDoctorAppointmentSchedule() {
+        return doctorAppointmentSchedule;
+    }
+
+    public void setDoctorAppointmentSchedule(DoctorAppointmentSchedule doctorAppointmentSchedule) {
+        this.doctorAppointmentSchedule = doctorAppointmentSchedule;
+    }
 }
