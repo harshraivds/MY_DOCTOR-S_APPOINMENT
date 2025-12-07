@@ -18,14 +18,15 @@ public class State {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+
+    @Column(name = "state", nullable = false)
+    private String state;
+
+    public String getState() {
+        return state;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setState(String state) {
+        this.state = state;
     }
-
-    @Column(name = "name", nullable = false)
-    private String name;
 }

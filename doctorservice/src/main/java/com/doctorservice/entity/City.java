@@ -10,8 +10,8 @@ public class City {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "city", nullable = false)
+    private String city;
 
     public Long getId() {
         return id;
@@ -21,11 +21,11 @@ public class City {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCity() {
+        return city;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCity(String city) {
+        this.city = city;
     }
 }

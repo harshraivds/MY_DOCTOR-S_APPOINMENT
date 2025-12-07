@@ -8,10 +8,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
+    Doctor findByContract(String contract);
+
     // Search by specialization + city name (case-insensitive)
     @Query("SELECT d FROM Doctor d " +
             "WHERE LOWER(d.specialization) = LOWER(:specialization) " +
-            "AND LOWER(d.area.name) = LOWER(:areaName)")
+            "AND LOWER(d.area.area) = LOWER(:areaName)")
     List<Doctor> findBySpecializationAndArea(@Param("specialization") String specialization,
                                                  @Param("areaName") String areaName);
 }
