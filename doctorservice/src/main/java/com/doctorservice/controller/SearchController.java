@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -39,9 +41,21 @@ public class SearchController {
         List<Doctor> doctors = doctorRepository.findBySpecializationAndArea(specialization, areaName);
 
         for(Doctor doctor: doctors){
+
             List<DoctorAppointmentSchedule> schedules = doctor.getAppointmentSchedules();
+
             for(DoctorAppointmentSchedule schedule:schedules){
+                LocalDate scheduleDate = schedule.getDate();
+                LocalTime now = LocalTime.now();
                 List<TimeSlots> timeSlots = timeSlotsRepository.getAllTimeSlots(schedule.getId());
+
+                for(TimeSlots ts : timeSlots){
+                    LocalTime slotTime = ts.getTime();
+
+                    if (slotTime.isAfter(now)) {
+                        System.out.println("available");
+                    }
+                }
             }
         }
         return doctors;
