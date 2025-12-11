@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,9 +40,10 @@ public class SearchController {
     ) {
 
         List<Doctor> doctors = doctorRepository.findBySpecializationAndArea(specialization, areaName);
-
+        LocalDate today = LocalDate.now();
         for(Doctor doctor: doctors){
-
+            List<LocalDate> validDates = new ArrayList<>();
+            List<LocalTime> allTimeSlots = new ArrayList<>();
             List<DoctorAppointmentSchedule> schedules = doctor.getAppointmentSchedules();
 
             for(DoctorAppointmentSchedule schedule:schedules){
@@ -49,11 +51,18 @@ public class SearchController {
                 LocalTime now = LocalTime.now();
                 List<TimeSlots> timeSlots = timeSlotsRepository.getAllTimeSlots(schedule.getId());
 
-                for(TimeSlots ts : timeSlots){
+                for (TimeSlots ts : timeSlots) {
                     LocalTime slotTime = ts.getTime();
 
-                    if (slotTime.isAfter(now)) {
-                        System.out.println("available");
+                    // If schedule is today → only future times
+                    if (scheduleDate.isEqual(today)) {
+                        if (slotTime.isAfter(now)) {
+                            allTimeSlots.add(slotTime);
+                        }
+                    }
+                    // If schedule is in the future → add all times
+                    else if (scheduleDate.isAfter(today)) {
+                        allTimeSlots.add(slotTime);
                     }
                 }
             }
