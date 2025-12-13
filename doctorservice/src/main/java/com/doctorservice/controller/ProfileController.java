@@ -22,10 +22,19 @@ public class ProfileController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<APIResponse> register(
+    public ResponseEntity<APIResponse> create(
             @RequestBody DoctorDto doctorDto
     ){
         APIResponse<?> response = profileService.create(doctorDto);
+
+        return new ResponseEntity<>(response, HttpStatusCode.valueOf(response.getStatus()));
+    }
+
+    @PostMapping("/update-profile")
+    public ResponseEntity<APIResponse> update(
+            @RequestBody DoctorDto doctorDto
+    ){
+        APIResponse<?> response = profileService.updateDoctor(doctorDto);
 
         return new ResponseEntity<>(response, HttpStatusCode.valueOf(response.getStatus()));
     }
